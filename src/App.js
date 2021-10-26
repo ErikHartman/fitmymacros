@@ -1,26 +1,16 @@
 import "./App.css";
-import CircularSlider from "@fseehawer/react-circular-slider";
+import Sliders from "./components/Macro_sliders";
+import Title from "./components/Title";
+import Generate from "./components/Generate";
 
 function App() {
   return (
     <div className="App">
+      <Title />
       <header className="App-header">
-        <p>Hur taggad?</p>
-        <CircularSlider
-          label="tagg-skala"
-          labelColor="#005a58"
-          knobColor="#005a58"
-          progressColorFrom="#00bfbd"
-          progressColorTo="#009c9a"
-          progressSize={24}
-          trackColor="#eeeeee"
-          trackSize={24}
-          data={[...Array(100).keys()]} //...
-          dataIndex={10}
-          onChange={(value) => {
-            console.log(value);
-          }}
-        />
+        <p>Macros</p>
+        <Sliders />
+        <Generate />
       </header>
     </div>
   );
