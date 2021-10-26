@@ -1,0 +1,9 @@
+We probably want all the sliders, input and generate to be a form.
+
+When the generate is pressed the database will be queried for the inputs.
+
+Todo:
+1. Add total calories above sliders.
+2. Add input for ingredients.
+3. Create a ingredient list.
+4. Create a webscraper. Start with ICA.

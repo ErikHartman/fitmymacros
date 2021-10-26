@@ -16,3 +16,18 @@
     margin-bottom: 2em;
     color: #005a58;
 }
+
+.generate-button {
+    background-color: #00bfbd;
+    height: 75px;
+    width: 200px;
+    border-radius: 20px;
+    color: #005a58;
+    border: 0px transparent;
+    transition: 0.1s;
+    font-size: 20px;
+}
+
+.generate-button:hover {
+    transform: scale(1.1);
+}
