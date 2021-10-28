@@ -31,3 +31,14 @@
 .generate-button:hover {
     transform: scale(1.1);
 }
+
+.recipe-container {
+    width: 50%;
+    display: flex;
+    margin: 10px;
+    background-color: #005a58;
+}
+
+.recipe-table {
+    color: white;
+}

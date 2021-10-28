@@ -4,9 +4,9 @@ import re
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
+
+import csv
 
 
 
@@ -24,15 +24,11 @@ def get_html(URL):
     options.add_argument('--headless')
     driver = webdriver.Chrome(options=options)
     driver.get(URL)
-    browser = scrollDown(driver, 10)
+    browser = scrollDown(driver, 200)
     html = browser.page_source
     browser.quit()
     return html
 
-
-def click_button(driver, xpath):
-    python_button = driver.find_elements_by_xpath(xpath)[0]
-    python_button.click()
 
 def get_recipe(URL):
     html = get_html(URL)
@@ -48,10 +44,28 @@ def parse_recipes(URL):
     soup = BeautifulSoup(html, features="html.parser")
     results = soup.find_all("a", class_="js-track-listing-recipe", href=True)
     hrefs = set([a['href'] for a in results])
-    
+    recipe_dict = {}
     for href in hrefs:
-        print(get_recipe(href))
+        title, ingredients = get_recipe(href)
+        recipe_dict[title] = ingredients
+        print(title, ingredients)
+    return recipe_dict
+
+
+def recipe_to_csv(recipe_dict):
+    path= "/home/erikh/killer-app/database/recipes.csv"
+    rows_added = 0
+    with open(path, 'wb+') as csv_file:  
+        writer = csv.writer(csv_file)
+        for key, value in recipe_dict.items():
+            writer.writerow([key, value])
+            rows_added+=1
+    print(f"Rows added: {rows_added}")
+    return True
+
 
 URL = "https://www.ica.se/recept/"
-parse_recipes(URL)
+
+recipe_dict = parse_recipes(URL)
+recipe_to_csv(recipe_dict)
 
