@@ -5,6 +5,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import csv
+import mysql.connector
+import itertools
 
 def start_browser(URL):
     options = Options()
@@ -27,6 +29,51 @@ def append_to_csv(title, ingredients_table, nutrient_table, recipe_url):
         wr.writerows([[td.text for td in row.find_all("td")] for row in ingredients_table.select("tr + tr")])
         wr.writerows([[td.text for td in row.find_all("td")] for row in nutrient_table.findAll("tr", class_="smallRows")])
     return True
+
+def generate_sql_values(title, ingredients_table, nutrient_table, recipe_url):
+    ingredients_table = [[td.text for td in row.find_all("td")] for row in ingredients_table.select("tr + tr")]
+    nutrient_table = [[td.text for td in row.find_all("td")] for row in nutrient_table.findAll("tr", class_="smallRows")]
+    fat = nutrient_table[0][-1]
+    carbohydrates = nutrient_table[1][-1]
+    protein = nutrient_table[2][-1]
+    energy = nutrient_table[3][-1]
+    ingredient_headers = ['Quantity',	'Unit', 'State',	'Energy (kcal)',	'Carbohydrates'	'Protein (g)',	'Total Lipid (Fat) (g)']
+    sql_dict = {'title':title, 'url':recipe_url, 'ingredient-headers': ingredient_headers, 'ingredients':ingredients_table, 'fat':fat, 'protein':protein, 'carbohydrates':carbohydrates, 'kcal':energy}
+    return sql_dict
+
+
+def append_to_sql_table(sql_dict):
+    def join_l(l, sep):
+        li = iter(l)
+        string = str(next(li))
+        for i in li:
+            string += str(sep) + str(i)
+        string = string.replace('[','').replace(']','').replace('\'', '')
+        return string
+    mydb = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="root",
+    database="fitmymacros"
+    )
+    mycursor = mydb.cursor()
+    sql = "INSERT INTO recipes (title, url, ingredients, kcal, protein, fat, carbohydrate) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    title = sql_dict["title"]
+    url = sql_dict["url"]
+    ingredients = join_l(list(itertools.chain(sql_dict["ingredients"])), '\n')
+    kcal = sql_dict["kcal"]
+    protein = sql_dict["protein"]
+    carbohydrates = sql_dict["carbohydrates"]
+    fat = sql_dict["fat"]
+    sql_vals = (f'{str(title)}',f'{str(url)}',f'{str(ingredients)}',f'{float(kcal)}',f'{float(protein)}',f'{float(fat)}',f'{float(carbohydrates)}')
+    print(sql_vals)
+    mycursor.execute(sql, sql_vals)
+    mydb.commit()
+
+    print(mycursor.rowcount, "record inserted.")
+    return True
+
+
 
 def get_ingredients_table(browser):
     html = browser.page_source
@@ -60,8 +107,13 @@ def generate_recipe_database(URL):
             title = get_title(browser)
             ingredients_table = get_ingredients_table(browser)
             nutrient_table = get_nutrient_table(browser)
-            append_to_csv(title, ingredients_table, nutrient_table, recipe_url)
+            sql_values = generate_sql_values(title, ingredients_table, nutrient_table, recipe_url)
+            append_to_sql_table(sql_values)
     browser.quit()
+    return True
+
 
 URL = "https://cosylab.iiitd.edu.in/recipedb/"
 generate_recipe_database(URL)
+
+
