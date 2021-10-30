@@ -33,6 +33,7 @@
 }
 
 .recipe-container {
+    display: inline-block;
     width: 50%;
     display: flex;
     margin: 10px;
@@ -41,4 +42,19 @@
 
 .recipe-table {
     color: white;
+}
+
+.kcal {
+    background-color: transparent;
+    border: 0;
+    color: #005a58;
+    font-size: 30px;
+    padding: 10px;
+    width: 100px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }

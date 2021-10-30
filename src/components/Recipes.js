@@ -15,7 +15,17 @@ function Recipe() {
   return (
     <div className="recipe-container">
       {recipeList.map((val) => {
-        return <h1 className="recipe-title">{val.title}</h1>;
+        return (
+          <div className="recipe">
+            <h2 className="recipe-title">{val.title}</h2>
+            <div>
+              <p>Total calories: {val.kcal}</p>
+              <p>Total fat: {val.fat}</p>
+              <p>Total protein: {val.protein}</p>
+              <p>Total carbohydrates: {val.carbohydrate}</p>
+            </div>
+          </div>
+        );
       })}
     </div>
   );

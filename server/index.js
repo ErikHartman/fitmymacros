@@ -22,6 +22,11 @@ app.get("/api/get", (req, res) => {
     });
 });
 
+// SUBSET FROM MYSQL
+//SELECT * FROM tbl
+// WHERE myrand > $x
+// ORDER BY myrand  LIMIT 200000;
+
 function generate_random_recipe() {
     const database_length = 10;
     random = Math.floor(Math.random(database_length)).toString();
