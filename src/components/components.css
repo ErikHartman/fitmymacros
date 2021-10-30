@@ -8,12 +8,14 @@
 
 .title {
     font-size: 30px;
+    font-weight: lighter;
     box-sizing: border-box;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: baseline;
-    color: #005a58;
+    letter-spacing: 5px;
+    color: #00bfbd;
 }
 
 .generate-button {
@@ -90,4 +92,24 @@
 .left {
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
+}
+
+.recipe-container {
+    font-weight: lighter;
+    color: #005a58;
+}
+
+.recipe-container .recipe-title {
+    color: #00bfbd;
+}
+
+.macro-table {
+    font-size: 20px;
+    display: inline-block;
+}
+
+.macro-table th,
+.macro-table td {
+    font-weight: lighter;
+    padding: 10px;
 }

@@ -16,22 +16,32 @@ function Recipe() {
     <>
       <div className="next-previous-buttons">
         <button className="previous">
-          <i class="arrow left"></i> Previous
+          <i className="arrow left"></i> Previous
         </button>
         <button className="next">
-          Next <i class="arrow right"></i>
+          Next <i className="arrow right"></i>
         </button>
       </div>
       <div className="recipe-container">
         {recipeList.map((val) => {
           return (
             <div className="recipe">
-              <h2 className="recipe-title">{val.title}</h2>
+              <p className="recipe-title">{val.title}</p>
               <div>
-                <p>Total calories: {val.kcal}</p>
-                <p>Total fat: {val.fat}</p>
-                <p>Total protein: {val.protein}</p>
-                <p>Total carbohydrates: {val.carbohydrate}</p>
+                <p>Total calories: {val.kcal} kcal</p>
+                <table className="macro-table">
+                  <tr>
+                    <th>Protein</th>
+                    <th>Carbohydrates</th>
+                    <th>Fat</th>
+                  </tr>
+                  <tr>
+                    <td>{val.fat}</td>
+                    <td> {val.protein}</td>
+                    <td>{val.carbohydrate}</td>
+                    <td>g</td>
+                  </tr>
+                </table>
               </div>
             </div>
           );
