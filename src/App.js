@@ -9,7 +9,6 @@ function App() {
     <div className="App">
       <Title />
       <header className="App-header">
-        <p>Macros</p>
         <Form />
         <Recipe />
       </header>

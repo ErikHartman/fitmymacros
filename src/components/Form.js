@@ -1,5 +1,6 @@
 import CircularSlider from "@fseehawer/react-circular-slider";
 import React from "react";
+
 import "./components.css";
 
 class Form extends React.Component {
@@ -57,7 +58,7 @@ class Form extends React.Component {
               trackColor="#eeeeee"
               trackSize={24}
               name="protein-slider"
-              data={[...Array(1000).keys()]}
+              data={[...Array(250).keys()]}
               //...
             />
           </div>
@@ -73,7 +74,7 @@ class Form extends React.Component {
               trackColor="#eeeeee"
               trackSize={24}
               name="carb-slider"
-              data={[...Array(1000).keys()]}
+              data={[...Array(250).keys()]}
               value={this.state.carbs} //...
             />
           </div>
@@ -89,7 +90,7 @@ class Form extends React.Component {
               trackColor="#eeeeee"
               trackSize={24}
               name="fat-slider"
-              data={[...Array(1000).keys()]}
+              data={[...Array(250).keys()]}
               value={this.state.fat}
               //...
             />

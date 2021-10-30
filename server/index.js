@@ -6,7 +6,9 @@ const PORT = 3002;
 const app = express();
 app.use(cors());
 
-const db = mysql.createPool({
+
+// This should only be in db.js
+export default db = mysql.createPool({
     host: "localhost",
     user: "root",
     password: "root",
@@ -27,7 +29,7 @@ app.get("/api/get", (req, res) => {
 // WHERE myrand > $x
 // ORDER BY myrand  LIMIT 200000;
 
-function generate_random_recipe() {
+export default function generate_random_recipe() {
     const database_length = 10;
     random = Math.floor(Math.random(database_length)).toString();
     const sqlSELECT = "SELECT * FROM recipes WHERE id=" + random;
