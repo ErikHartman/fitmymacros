@@ -13,13 +13,13 @@ class ThemeToggler extends React.Component {
   render() {
     return (
       <div className="theme-switch-wrapper">
-        <label class="theme-switch" for="checkbox">
+        <label className="theme-switch" for="checkbox">
           <input
             type="checkbox"
             id="checkbox"
             onClick={this.switchTheme}
           ></input>
-          <div class="theme-slider round"></div>
+          <div className="theme-slider round"></div>
         </label>
       </div>
     );

@@ -26,7 +26,9 @@ function Recipe() {
         {recipeList.map((val) => {
           return (
             <div className="recipe">
-              <p className="recipe-title">{val.title}</p>
+              <a className="recipe-title" href={val.url}>
+                {val.title}
+              </a>
               <div>
                 <p>Total calories: {val.kcal} kcal</p>
                 <table className="macro-table">
@@ -36,9 +38,9 @@ function Recipe() {
                     <th>Fat</th>
                   </tr>
                   <tr>
+                    <td>{val.protein}</td>
+                    <td> {val.carbohydrate}</td>
                     <td>{val.fat}</td>
-                    <td> {val.protein}</td>
-                    <td>{val.carbohydrate}</td>
                     <td>g</td>
                   </tr>
                 </table>

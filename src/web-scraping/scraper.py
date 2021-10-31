@@ -37,7 +37,7 @@ def generate_sql_values(title, ingredients_table, nutrient_table, recipe_url):
     carbohydrates = nutrient_table[1][-1]
     protein = nutrient_table[2][-1]
     energy = nutrient_table[3][-1]
-    ingredient_headers = ['Quantity',	'Unit', 'State',	'Energy (kcal)',	'Carbohydrates'	'Protein (g)',	'Total Lipid (Fat) (g)']
+    ingredient_headers = ['Quantity',	'Unit', 'State',	'Energy (kcal)',	'Carbohydrates (g)',	'Protein (g)',	'Total Lipid (Fat) (g)']
     sql_dict = {'title':title, 'url':recipe_url, 'ingredient-headers': ingredient_headers, 'ingredients':ingredients_table, 'fat':fat, 'protein':protein, 'carbohydrates':carbohydrates, 'kcal':energy}
     return sql_dict
 
