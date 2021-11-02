@@ -48,7 +48,7 @@ class Form extends React.Component {
 
   next(e) {
     let index = this.state.recipeIndex;
-    if (index < this.state.recipes.length) {
+    if (index < this.state.recipes.length - 1) {
       index++;
     }
     this.setState({ recipeIndex: index });
@@ -56,7 +56,7 @@ class Form extends React.Component {
 
   previous(e) {
     let index = this.state.recipeIndex;
-    if (index >= 0) {
+    if (index > 0) {
       index--;
     }
     console.log(index);
@@ -84,7 +84,9 @@ class Form extends React.Component {
           all_data.fat <= fat + 200
         );
       });
-
+      subset_recipes = subset_recipes.sort(function (a, b) {
+        return Math.abs(kcal - a.kcal) - Math.abs(kcal - b.kcal);
+      });
       this.setState({ recipes: subset_recipes, recipeindex: 0 });
     });
   }
