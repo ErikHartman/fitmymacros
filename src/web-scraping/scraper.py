@@ -4,9 +4,12 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
 import csv
+import time
 import mysql.connector
 import itertools
+
 
 def start_browser(URL):
     options = Options()
@@ -66,14 +69,22 @@ def append_to_sql_table(sql_dict):
     carbohydrates = sql_dict["carbohydrates"]
     fat = sql_dict["fat"]
     sql_vals = (f'{str(title)}',f'{str(url)}',f'{str(ingredients)}',f'{float(kcal)}',f'{float(protein)}',f'{float(fat)}',f'{float(carbohydrates)}')
-    print(sql_vals)
     mycursor.execute(sql, sql_vals)
     mydb.commit()
 
     print(mycursor.rowcount, "record inserted.")
     return True
 
-
+def get_recipe_url(browser):
+    html = browser.page_source
+    soup = BeautifulSoup(html, features="html.parser")
+    li_list = soup.find_all('li', class_='collection-item avatar')
+    recipe_url = None
+    for li in li_list:
+        a = li.find_all('i', class_="fa fa-search circle")
+        if (len(a) > 0):
+            recipe_url = li.find('a', target='_blank')['href']
+    return recipe_url
 
 def get_ingredients_table(browser):
     html = browser.page_source
@@ -94,6 +105,7 @@ def get_title(browser):
     return title
 
 def generate_recipe_database(URL):
+    start = time.time()
     main_browser = start_browser(URL)
     sub_browser = start_browser(URL)
     main_browser.find_element_by_css_selector("#test1 > form > div.input-group-btn.input-group-append > center > input").click()
@@ -112,14 +124,21 @@ def generate_recipe_database(URL):
                 title = get_title(sub_browser)
                 ingredients_table = get_ingredients_table(sub_browser)
                 nutrient_table = get_nutrient_table(sub_browser)
-                sql_values = generate_sql_values(title, ingredients_table, nutrient_table, recipe_url)
+                origin_url = get_recipe_url(sub_browser)
+                if origin_url == None:
+                    origin_url = recipe_url
+                sql_values = generate_sql_values(title, ingredients_table, nutrient_table, origin_url)
                 print(sql_values)
-                #append_to_sql_table(sql_values)
-        main_browser.find_element_by_css_selector("#nextpage").click()
-        WebDriverWait(main_browser, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, "#mainBodyHeading"))).click()
-
+                append_to_sql_table(sql_values)
+        try:
+            main_browser.find_element_by_css_selector("#nextpage").click()
+            WebDriverWait(main_browser, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, "#mainBodyHeading"))).click()
+        except NoSuchElementException:
+            has_next_page = False
     main_browser.quit()
     sub_browser.quit()
+    end = time.time()
+    print(f'Done in {end-start} seconds')
     return True
 
 
