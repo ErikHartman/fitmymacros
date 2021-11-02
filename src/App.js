@@ -8,8 +8,8 @@ function App() {
   return (
     <div className="App">
       <ThemeToggler />
-      <Title />
       <header className="App-header">
+        <Title />
         <Form />
       </header>{" "}
     </div>

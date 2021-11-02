@@ -4,8 +4,6 @@ import "./components.css";
 function Recipe(props) {
   let recipe = props.recipe;
   if (recipe === undefined || recipe === null) {
-    console.log(recipe);
-
     recipe = {
       title: "Grandmas meatballs",
       url: "",
@@ -19,10 +17,8 @@ function Recipe(props) {
   return (
     <>
       <div className="recipe-container">
-        {" "}
         <div className="recipe">
           <a className="recipe-title" href={recipe.url}>
-            {" "}
             {recipe.title}{" "}
           </a>{" "}
           <div>
