@@ -102,6 +102,7 @@
 .recipe-container .recipe-title {
     text-decoration: none;
     color: #00bfbd;
+    padding: 0.5em;
 }
 
 .macro-table {
@@ -113,4 +114,17 @@
 .macro-table td {
     font-weight: lighter;
     padding: 10px;
+}
+
+.macro-table th {
+    color: #00bfbd;
+}
+
+.ingredients-and-instructions-div {
+    display: flex;
+}
+
+.ingredients-table {
+    width: 50%;
+    float: left;
 }
