@@ -1,7 +1,11 @@
 When the generate is pressed the database will be queried for the inputs.
 
 TODO: 
-1. On press of generate --> Query database for top 10 000 recipes in the surrounding kcal area
-2. Sort by the absolute value of difference for macros
-3. Add buttons next and previous
-4. On click of next -- > show next best match
+1. Only show one item in recipeList and make next and previous work work
+1b. Add + - to make the user select how accurate
+2. Sort list
+3. Fix webscraper completely 
+4. Fix front-end
+
+IDEAS: 
+Add preferences (veg), or specific ingredients

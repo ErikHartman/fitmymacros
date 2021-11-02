@@ -13,12 +13,15 @@ class Form extends React.Component {
       protein: 0,
       fat: 0,
       carbs: 0,
+      recipeIndex: 0,
     };
 
     this.changeProtein = this.changeProtein.bind(this);
     this.changeFat = this.changeFat.bind(this);
     this.changeCarbs = this.changeCarbs.bind(this);
     this.queryDatabase = this.queryDatabase.bind(this);
+    this.next = this.next.bind(this);
+    this.previous = this.previous.bind(this);
   }
   changeProtein(e) {
     var p = e;
@@ -43,6 +46,23 @@ class Form extends React.Component {
     });
   }
 
+  next(e) {
+    let index = this.state.recipeIndex;
+    if (index < this.state.recipes.length) {
+      index++;
+    }
+    this.setState({ recipeIndex: index });
+  }
+
+  previous(e) {
+    let index = this.state.recipeIndex;
+    if (index >= 0) {
+      index--;
+    }
+    console.log(index);
+    this.setState({ recipeIndex: index });
+  }
+
   queryDatabase(event) {
     event.preventDefault();
 
@@ -56,16 +76,16 @@ class Form extends React.Component {
         return (
           all_data.kcal >= kcal - 200 &&
           all_data.kcal <= kcal + 200 &&
-          all_data.protein >= protein - 20 &&
-          all_data.protein <= protein + 20 &&
-          all_data.carbohydrate >= carbs - 20 &&
-          all_data.carbohydrate <= carbs + 20 &&
-          all_data.fat >= fat - 20 &&
-          all_data.fat <= fat + 20
+          all_data.protein >= protein - 200 &&
+          all_data.protein <= protein + 200 &&
+          all_data.carbohydrate >= carbs - 200 &&
+          all_data.carbohydrate <= carbs + 200 &&
+          all_data.fat >= fat - 200 &&
+          all_data.fat <= fat + 200
         );
       });
 
-      this.setState({ recipes: subset_recipes });
+      this.setState({ recipes: subset_recipes, recipeindex: 0 });
     });
   }
 
@@ -125,7 +145,15 @@ class Form extends React.Component {
             Generate{" "}
           </button>{" "}
         </form>
-        <Recipe recipeList={this.state.recipes} />
+        <div className="next-previous-buttons">
+          <button className="previous" onClick={this.previous}>
+            <i className="arrow left"> </i> Previous{" "}
+          </button>{" "}
+          <button className="next" onClick={this.next}>
+            Next <i className="arrow right"> </i>{" "}
+          </button>{" "}
+        </div>{" "}
+        <Recipe recipe={this.state.recipes[this.state.recipeIndex]} />
       </>
     );
   }

@@ -2,49 +2,46 @@ import React from "react";
 import "./components.css";
 
 function Recipe(props) {
-  let recipeList = props.recipeList;
+  let recipe = props.recipe;
+  if (recipe === undefined || recipe === null) {
+    console.log(recipe);
 
-  if (recipeList === null) {
-    recipeList = [];
+    recipe = {
+      title: "Grandmas meatballs",
+      url: "",
+      kcal: 0,
+      protein: 0,
+      fat: 0,
+      carbohydrate: 0,
+    };
   }
+
   return (
     <>
-      <div className="next-previous-buttons">
-        <button className="previous">
-          <i className="arrow left"> </i> Previous{" "}
-        </button>{" "}
-        <button className="next">
-          Next <i className="arrow right"> </i>{" "}
-        </button>{" "}
-      </div>{" "}
       <div className="recipe-container">
         {" "}
-        {recipeList.map((val) => {
-          return (
-            <div className="recipe">
-              <a className="recipe-title" href={val.url}>
-                {" "}
-                {val.title}{" "}
-              </a>{" "}
-              <div>
-                <p>
-                  {" "}
-                  Total calories: {val.kcal}
-                  kcal{" "}
-                </p>{" "}
-                <table className="macro-table">
-                  <tr>
-                    <th> Protein </th> <th> Carbohydrates </th> <th> Fat </th>{" "}
-                  </tr>
-                  <tr>
-                    <td> {val.protein} </td> <td> {val.carbohydrate} </td>{" "}
-                    <td> {val.fat} </td> <td> g </td>{" "}
-                  </tr>
-                </table>{" "}
-              </div>{" "}
-            </div>
-          );
-        })}{" "}
+        <div className="recipe">
+          <a className="recipe-title" href={recipe.url}>
+            {" "}
+            {recipe.title}{" "}
+          </a>{" "}
+          <div>
+            <p>
+              {" "}
+              Total calories: {recipe.kcal}
+              kcal{" "}
+            </p>{" "}
+            <table className="macro-table">
+              <tr>
+                <th> Protein </th> <th> Carbohydrates </th> <th> Fat </th>{" "}
+              </tr>
+              <tr>
+                <td> {recipe.protein} </td> <td> {recipe.carbohydrate} </td>{" "}
+                <td> {recipe.fat} </td> <td> g </td>{" "}
+              </tr>
+            </table>{" "}
+          </div>{" "}
+        </div>
       </div>{" "}
     </>
   );
