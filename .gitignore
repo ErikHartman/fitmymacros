@@ -25,3 +25,5 @@ yarn-error.log*
 env
 db.js
 src/server/config
+
+src/web-scraping/__pycache__

@@ -3,6 +3,7 @@ import React from "react";
 import ThemeToggler from "./components/ThemeToggler";
 import Form from "./components/Form";
 import Title from "./components/Title";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Title />
         <Form />
       </header>{" "}
+      <Footer />
     </div>
   );
 }

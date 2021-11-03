@@ -11,10 +11,26 @@ function Recipe(props) {
       protein: 0,
       fat: 0,
       carbohydrate: 0,
-      ingredients: "Love, 1 tbsp",
+      ingredients: "Love, 1, tbsp, -,-,-,-,-",
+      howto: "1. Make em \n 2. Eat em",
     };
   }
   // Probably need a parse ingredients function and a parse instructions function
+
+  let ingredients = recipe.ingredients.split("\n");
+  let ingredients_for_table = [];
+  for (let ingredient of ingredients) {
+    let split_ingredient = ingredient.split(",");
+    let formatted_ingredient = {
+      what: split_ingredient[0],
+      qty: split_ingredient[1] + split_ingredient[2] + split_ingredient[3],
+      kcal: split_ingredient[4],
+      carbs: split_ingredient[5],
+      protein: split_ingredient[6],
+      fat: split_ingredient[7],
+    };
+    ingredients_for_table.push(formatted_ingredient);
+  }
 
   return (
     <>
@@ -44,14 +60,38 @@ function Recipe(props) {
               <table className="macro-table ingredients-table">
                 <tbody>
                   <tr>
-                    <th>Ingredients</th>
+                    <th>ingredient</th>
+                    <th>qty</th>
+                    <th>kcal</th>
+                    <th>carbs</th>
+                    <th>protein</th>
+                    <th>fat (g)</th>
                   </tr>
-                  <tr>
-                    <td>{recipe.ingredients}</td>
-                  </tr>
+
+                  {ingredients_for_table.map((item, i) => (
+                    <tr>
+                      <td>{item.what}</td>
+                      <td>{item.qty}</td>
+                      <td>{item.kcal}</td>
+                      <td>{item.carbs}</td>
+                      <td>{item.protein}</td>
+                      <td>{item.fat}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>{" "}
-              <p>1. Make'a de meataballsa</p>
+              <table className="macro-table">
+                <tbody>
+                  <tr>
+                    <th>Instructions</th>
+                  </tr>
+                  {recipe.howto.split("\n").map((item, i) => (
+                    <tr>
+                      <td>{item}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>{" "}
         </div>

@@ -34,8 +34,10 @@
 }
 
 .recipe-container {
+    font-weight: lighter;
+    color: #005a58;
     display: inline-block;
-    width: 50%;
+    width: calc(280 * 3px);
     margin: 10px;
     background-color: transparent;
     border: 1px solid #005a58;
@@ -94,11 +96,6 @@
     -webkit-transform: rotate(135deg);
 }
 
-.recipe-container {
-    font-weight: lighter;
-    color: #005a58;
-}
-
 .recipe-container .recipe-title {
     text-decoration: none;
     color: #00bfbd;
@@ -111,7 +108,7 @@
 }
 
 .macro-table th,
-.macro-table td {
+.macro-table {
     font-weight: lighter;
     padding: 10px;
 }
@@ -125,6 +122,10 @@
 }
 
 .ingredients-table {
-    width: 50%;
+    width: 70%;
     float: left;
+}
+
+.footer {
+    height: 2rem;
 }
