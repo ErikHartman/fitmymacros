@@ -25,11 +25,11 @@
     },
     "scripts": {
         "start": "react-scripts start",
+        "dev": "concurrently --kill-others \"react-scripts start\" \"node src/server/server.js \"",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "stop": "taskkill -F -IM node.exe",
         "eject": "react-scripts eject",
-        "server": "nodemon -r dotenv/config ./src/server/server.js",
         "client": "react-scripts start"
     },
     "eslintConfig": {
