@@ -12,7 +12,7 @@ function App() {
       <header className="App-header">
         <Title />
         <Form />
-      </header>{" "}
+      </header>
       <Footer />
     </div>
   );

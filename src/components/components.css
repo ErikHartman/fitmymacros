@@ -129,3 +129,8 @@
 .footer {
     height: 2rem;
 }
+
+.github {
+    margin-bottom: 10px;
+    filter: invert(1);
+}

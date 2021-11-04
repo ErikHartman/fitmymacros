@@ -60,7 +60,7 @@ def append_to_sql_table(sql_dict):
     database="fitmymacros"
     )
     mycursor = mydb.cursor()
-    sql = "INSERT INTO recipes (title, url, ingredients, kcal, protein, fat, carbohydrate, instructions) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+    sql = "INSERT INTO recipes (title, url, ingredients, kcal, protein, fat, carbohydrates, instructions) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
     title = sql_dict["title"]
     url = sql_dict["url"]
     ingredients = join_l(list(itertools.chain(sql_dict["ingredients"])), '\n')
@@ -69,12 +69,15 @@ def append_to_sql_table(sql_dict):
     carbohydrates = sql_dict["carbohydrates"]
     fat = sql_dict["fat"]
     instructions = sql_dict["instructions"]
-    sql_vals = (f'{str(title)}',f'{str(url)}',f'{str(ingredients)}',f'{float(kcal)}',f'{float(protein)}',f'{float(fat)}',f'{float(carbohydrates)}',f'{str(instructions)}')
-    mycursor.execute(sql, sql_vals)
-    mydb.commit()
+    if (kcal != '-' and protein != '-' and fat != '-' and carbohydrates != '-'):
+        sql_vals = (f'{str(title)}',f'{str(url)}',f'{str(ingredients)}',f'{float(kcal)}',f'{float(protein)}',f'{float(fat)}',f'{float(carbohydrates)}',f'{str(instructions)}')
+        mycursor.execute(sql, sql_vals)
+        mydb.commit()
+        return True
+    else:
+        return False
 
-    print(mycursor.rowcount, "record inserted.")
-    return True
+    
 
 def get_recipe_url(browser):
     html = browser.page_source
@@ -115,7 +118,6 @@ def get_instructions(browser):
     instructions = ''
     for p in paragraphs:
         instructions += '\n' + ''.join(p.findAll(text = True))
-    print(instructions)
     return instructions
 
 def generate_recipe_database(URL):
@@ -124,9 +126,10 @@ def generate_recipe_database(URL):
     sub_browser = start_browser(URL)
     main_browser.find_element_by_css_selector("#test1 > form > div.input-group-btn.input-group-append > center > input").click()
     sub_browser.find_element_by_css_selector("#test1 > form > div.input-group-btn.input-group-append > center > input").click()
-    WebDriverWait(main_browser, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, "#mainBodyHeading"))).click() # now the browser sits on list page
+    WebDriverWait(main_browser, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, "#mainBodyHeading"))).click()
     WebDriverWait(sub_browser, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, "#mainBodyHeading"))).click()
     has_next_page = True
+    number_of_records_inserted = 0
     while has_next_page:
         html = main_browser.page_source
         soup = BeautifulSoup(html, features="html.parser")
@@ -142,7 +145,12 @@ def generate_recipe_database(URL):
                 if origin_url == None:
                     origin_url = recipe_url
                 sql_values = generate_sql_values(title, ingredients_table, nutrient_table, origin_url, instructions)
-                append_to_sql_table(sql_values)
+                if (append_to_sql_table(sql_values)):
+                    number_of_records_inserted += 1
+                    print(f'Number of records inserted: {number_of_records_inserted}')
+                else:
+                    print(sql_values)
+
         try:
             main_browser.find_element_by_css_selector("#nextpage").click()
             WebDriverWait(main_browser, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, "#mainBodyHeading"))).click()

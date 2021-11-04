@@ -14,4 +14,4 @@ mydb = mysql.connector.connect(
 
 mycursor = mydb.cursor()
 
-mycursor.execute("CREATE TABLE recipes (title TEXT, ingredients TEXT, url TEXT, kcal DOUBLE, protein DOUBLE, fat DOUBLE, carbohydrate DOUBLE, id INT AUTO_INCREMENT PRIMARY KEY)")
+mycursor.execute("CREATE TABLE recipes (title TEXT, ingredients TEXT, url TEXT, kcal DOUBLE, protein DOUBLE, fat DOUBLE, carbohydrates DOUBLE, instructions TEXT, id INT AUTO_INCREMENT PRIMARY KEY)")
