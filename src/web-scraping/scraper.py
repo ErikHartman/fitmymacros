@@ -21,27 +21,16 @@ def start_browser(URL):
     browser.get(URL)
     return browser
 
-def append_to_csv(title, ingredients_table, nutrient_table, recipe_url):
-    headers = [th.text for th in ingredients_table.select("tr th")]
-    with open("recipes.csv", "a") as f:
-        print('Writing to csv...')
-        wr = csv.writer(f)
-        wr.writerow(headers)
-        wr.writerow([title])
-        wr.writerow([recipe_url])
-        wr.writerows([[td.text for td in row.find_all("td")] for row in ingredients_table.select("tr + tr")])
-        wr.writerows([[td.text for td in row.find_all("td")] for row in nutrient_table.findAll("tr", class_="smallRows")])
-    return True
 
 def generate_sql_values(title, ingredients_table, nutrient_table, recipe_url, instructions):
-    ingredients_table = [[td.text for td in row.find_all("td")] for row in ingredients_table.select("tr + tr")]
+    ingredients_table = [[td.text for td in row.find_all("td")] for row in ingredients_table.find_all('tr')]
     nutrient_table = [[td.text for td in row.find_all("td")] for row in nutrient_table.findAll("tr", class_="smallRows")]
     fat = nutrient_table[0][-1]
     carbohydrates = nutrient_table[1][-1]
     protein = nutrient_table[2][-1]
     energy = nutrient_table[3][-1]
-    ingredient_headers = ['Quantity',	'Unit', 'State',	'Energy (kcal)',	'Carbohydrates (g)',	'Protein (g)',	'Total Lipid (Fat) (g)']
-    sql_dict = {'title':title, 'url':recipe_url, 'ingredient-headers': ingredient_headers, 'ingredients':ingredients_table, 'fat':fat, 'protein':protein, 'carbohydrates':carbohydrates, 'kcal':energy, 'instructions': instructions}
+    sql_dict = {'title':title, 'url':recipe_url, 'ingredients':ingredients_table, 'fat':fat, 'protein':protein, 'carbohydrates':carbohydrates, 'kcal':energy, 'instructions': instructions}
+
     return sql_dict
 
 
@@ -130,6 +119,12 @@ def generate_recipe_database(URL):
     WebDriverWait(sub_browser, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, "#mainBodyHeading"))).click()
     has_next_page = True
     number_of_records_inserted = 0
+    
+    with open("./public/database/recipes.csv", "w", newline='', encoding='utf-8') as f:
+        print('Creating csv...')
+        wr = csv.writer(f)
+        wr.writerow(['title', 'url', 'ingredients', 'fat', 'protein',  'carbohydrates','kcal', 'instructions'])
+
     while has_next_page:
         html = main_browser.page_source
         soup = BeautifulSoup(html, features="html.parser")
@@ -145,12 +140,13 @@ def generate_recipe_database(URL):
                 if origin_url == None:
                     origin_url = recipe_url
                 sql_values = generate_sql_values(title, ingredients_table, nutrient_table, origin_url, instructions)
-                if (append_to_sql_table(sql_values)):
-                    number_of_records_inserted += 1
-                    print(f'Number of records inserted: {number_of_records_inserted}')
-                else:
-                    print(sql_values)
 
+                with open("./public/database/recipes.csv", "a", newline='', encoding='utf-8') as f:
+                    wr = csv.writer(f)
+                    wr.writerow(sql_values.values())
+
+                number_of_records_inserted += 1
+                print(f'Number of records inserted: {number_of_records_inserted}')
         try:
             main_browser.find_element_by_css_selector("#nextpage").click()
             WebDriverWait(main_browser, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, "#mainBodyHeading"))).click()
@@ -162,8 +158,9 @@ def generate_recipe_database(URL):
     print(f'Done in {end-start} seconds')
     return True
 
-
+ingredient_headers = ['Quantity',	'Unit', 'State',	'Energy (kcal)',	'Carbohydrates (g)',	'Protein (g)',	'Total Lipid (Fat) (g)']
 URL = "https://cosylab.iiitd.edu.in/recipedb/"
 generate_recipe_database(URL)
+
 
 

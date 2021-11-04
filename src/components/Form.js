@@ -1,14 +1,16 @@
 import CircularSlider from "@fseehawer/react-circular-slider";
 import React from "react";
 import "./components.css";
-import Axios from "axios";
 import Recipe from "./Recipes";
-var csv = require("jquery-csv");
+import Papa from "papaparse";
 
 async function getData() {
-  const response = await fetch("recipes.csv");
+  const response = await fetch("database/recipes.csv");
   const data = await response.text();
-  console.log(data);
+  var results = Papa.parse(data, {
+    header: true,
+  });
+  return results;
 }
 
 class Form extends React.Component {
@@ -72,9 +74,7 @@ class Form extends React.Component {
 
   queryDatabase(event) {
     event.preventDefault();
-    getData();
-
-    Axios.get("http://localhost:3002/api/get").then((data) => {
+    getData().then((data) => {
       let all_data = data.data;
       var kcal = this.state.kcal;
       var protein = this.state.protein;
