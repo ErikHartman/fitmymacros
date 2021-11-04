@@ -3,6 +3,13 @@ import React from "react";
 import "./components.css";
 import Axios from "axios";
 import Recipe from "./Recipes";
+var csv = require("jquery-csv");
+
+async function getData() {
+  const response = await fetch("recipes.csv");
+  const data = await response.text();
+  console.log(data);
+}
 
 class Form extends React.Component {
   constructor(props) {
@@ -65,6 +72,7 @@ class Form extends React.Component {
 
   queryDatabase(event) {
     event.preventDefault();
+    getData();
 
     Axios.get("http://localhost:3002/api/get").then((data) => {
       let all_data = data.data;
@@ -78,15 +86,23 @@ class Form extends React.Component {
           all_data.kcal <= kcal + 200 &&
           all_data.protein >= protein - 200 &&
           all_data.protein <= protein + 200 &&
-          all_data.carbohydrate >= carbs - 200 &&
-          all_data.carbohydrate <= carbs + 200 &&
+          all_data.carbohydrates >= carbs - 200 &&
+          all_data.carbohydrates <= carbs + 200 &&
           all_data.fat >= fat - 200 &&
           all_data.fat <= fat + 200
         );
       });
       subset_recipes = subset_recipes.sort(function (a, b) {
-        return Math.abs(kcal - a.kcal) - Math.abs(kcal - b.kcal);
+        return (
+          Math.abs(kcal - a.kcal) -
+          Math.abs(kcal - b.kcal) +
+          (Math.abs(protein - a.protein) - Math.abs(protein - b.protein)) +
+          (Math.abs(carbs - a.carbohydrates) -
+            Math.abs(carbs - b.carbohydrate)) +
+          (Math.abs(fat - a.fat) - Math.abs(fat - b.fat))
+        );
       });
+
       this.setState({ recipes: subset_recipes, recipeindex: 0 });
     });
   }
