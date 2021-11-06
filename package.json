@@ -29,10 +29,8 @@
     },
     "scripts": {
         "start": "react-scripts start",
-        "dev": "concurrently \"react-scripts start\" \"node src/server/server.js \"",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "stop": "taskkill -F -IM node.exe",
         "eject": "react-scripts eject",
         "client": "react-scripts start"
     },

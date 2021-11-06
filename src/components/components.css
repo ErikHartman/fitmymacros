@@ -41,7 +41,13 @@
     margin: 10px;
     background-color: transparent;
     border: 1px solid #005a58;
-    border-radius: 5%;
+    border-radius: 30px;
+}
+
+.recipe-upper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .recipe-table {
@@ -84,6 +90,7 @@
     border-width: 0 3px 3px 0;
     display: inline-block;
     padding: 3px;
+    margin-bottom: 3px;
 }
 
 .right {
@@ -99,7 +106,7 @@
 .recipe-container .recipe-title {
     text-decoration: none;
     color: #00bfbd;
-    padding: 0.5em;
+    padding: 1em;
 }
 
 .macro-table {
@@ -109,6 +116,7 @@
 
 .macro-table th,
 .macro-table {
+    margin-top: 10px;
     font-weight: lighter;
     padding: 10px;
 }
@@ -132,5 +140,5 @@
 
 .github {
     margin-bottom: 10px;
-    filter: invert(1);
+    color: white;
 }

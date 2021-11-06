@@ -137,6 +137,7 @@ def generate_recipe_database(URL):
                 nutrient_table = get_nutrient_table(sub_browser)
                 origin_url = get_recipe_url(sub_browser)
                 instructions = get_instructions(sub_browser)
+                
                 if origin_url == None:
                     origin_url = recipe_url
                 sql_values = generate_sql_values(title, ingredients_table, nutrient_table, origin_url, instructions)
@@ -147,6 +148,8 @@ def generate_recipe_database(URL):
 
                 number_of_records_inserted += 1
                 print(f'Number of records inserted: {number_of_records_inserted}')
+                if (number_of_records_inserted >= 10000):
+                    break
         try:
             main_browser.find_element_by_css_selector("#nextpage").click()
             WebDriverWait(main_browser, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, "#mainBodyHeading"))).click()

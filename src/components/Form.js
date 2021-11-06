@@ -68,7 +68,7 @@ class Form extends React.Component {
     if (index > 0) {
       index--;
     }
-    console.log(index);
+
     this.setState({ recipeIndex: index });
   }
 
@@ -125,7 +125,7 @@ class Form extends React.Component {
                 trackColor="#eeeeee"
                 trackSize={24}
                 name="protein-slider"
-                data={[...Array(250).keys()]}
+                data={[...Array(100).keys()]}
               />{" "}
             </div>{" "}
             <div className="slider">
@@ -140,7 +140,7 @@ class Form extends React.Component {
                 trackColor="#eeeeee"
                 trackSize={24}
                 name="carb-slider"
-                data={[...Array(250).keys()]}
+                data={[...Array(100).keys()]}
               />{" "}
             </div>{" "}
             <div className="slider">
@@ -155,7 +155,7 @@ class Form extends React.Component {
                 trackColor="#eeeeee"
                 trackSize={24}
                 name="fat-slider"
-                data={[...Array(250).keys()]}
+                data={[...Array(100).keys()]}
               />{" "}
             </div>{" "}
           </div>{" "}
