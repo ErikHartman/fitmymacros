@@ -86,11 +86,14 @@ function Recipe(props) {
                 <tr>
                   <th>Instructions</th>
                 </tr>
-                {recipe.instructions.split("\n").map((item, i) => (
-                  <tr key={i}>
-                    <td>{item}</td>
-                  </tr>
-                ))}
+                {recipe.instructions
+                  .split("\n")
+                  .slice(1)
+                  .map((item, i) => (
+                    <tr key={i}>
+                      <td>{item}</td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>

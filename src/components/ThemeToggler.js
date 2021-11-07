@@ -4,9 +4,9 @@ import React from "react";
 class ThemeToggler extends React.Component {
   switchTheme = (e) => {
     if (e.target.checked) {
-      document.body.style.background = "white";
+      document.body.style.background = "#bebebe";
     } else {
-      document.body.style.background = "#282c34";
+      document.body.style.background = "#333333";
     }
   };
 

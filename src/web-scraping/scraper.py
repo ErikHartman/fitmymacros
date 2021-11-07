@@ -4,7 +4,9 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
+
+from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, NoSuchElementException
+
 import csv
 import time
 import mysql.connector
@@ -86,6 +88,8 @@ def get_ingredients_table(browser):
     ingredients_table = soup.find("div", id="ingredient_nutri")
     return ingredients_table
 
+
+
 def get_nutrient_table(browser):
     html = browser.page_source
     soup = BeautifulSoup(html, features="html.parser")
@@ -108,6 +112,7 @@ def get_instructions(browser):
     for p in paragraphs:
         instructions += '\n' + ''.join(p.findAll(text = True))
     return instructions
+    
 
 def generate_recipe_database(URL):
     start = time.time()
@@ -130,27 +135,30 @@ def generate_recipe_database(URL):
         soup = BeautifulSoup(html, features="html.parser")
         for a in soup.find_all("a", target="_blank", href=True):
             if a['href'].startswith("/recipedb/search_recipeInfo"):
-                recipe_url = URL+a['href'].replace('/recipedb/', '')
-                sub_browser.get(recipe_url)
-                title = get_title(sub_browser)
-                ingredients_table = get_ingredients_table(sub_browser)
-                nutrient_table = get_nutrient_table(sub_browser)
-                origin_url = get_recipe_url(sub_browser)
-                instructions = get_instructions(sub_browser)
-                
-                if origin_url == None:
-                    origin_url = recipe_url
-                sql_values = generate_sql_values(title, ingredients_table, nutrient_table, origin_url, instructions)
+                try:
+                    recipe_url = URL+a['href'].replace('/recipedb/', '')
+                    sub_browser.get(recipe_url)
+                    title = get_title(sub_browser)
+                    ingredients_table = get_ingredients_table(sub_browser)
+                    nutrient_table = get_nutrient_table(sub_browser)
+                    origin_url = get_recipe_url(sub_browser)
+                    instructions = get_instructions(sub_browser)
+                    
+                    if origin_url == None:
+                        origin_url = recipe_url
+                    sql_values = generate_sql_values(title, ingredients_table, nutrient_table, origin_url, instructions)
 
-                with open("./public/database/recipes.csv", "a", newline='', encoding='utf-8') as f:
-                    wr = csv.writer(f)
-                    wr.writerow(sql_values.values())
+                    with open("./public/database/recipes.csv", "a", newline='', encoding='utf-8') as f:
+                        wr = csv.writer(f)
+                        wr.writerow(sql_values.values())
 
-                number_of_records_inserted += 1
-                print(f'Number of records inserted: {number_of_records_inserted}')
-                if (number_of_records_inserted >= 10000):
-                    break
+                    number_of_records_inserted += 1
+                    if (number_of_records_inserted >= 50000):
+                        break
+                except:
+                    continue
         try:
+            print(f'Number of records inserted: {number_of_records_inserted}')
             main_browser.find_element_by_css_selector("#nextpage").click()
             WebDriverWait(main_browser, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, "#mainBodyHeading"))).click()
         except NoSuchElementException:

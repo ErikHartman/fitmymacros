@@ -1,7 +1,7 @@
 When the generate is pressed the database will be queried for the inputs.
 
 TODO: 
-1. Add banners front end
+1. Add input "I like these" or "I dont like these" https://react-select.com/home 
 
 IDEAS: 
 Add preferences (veg), or specific ingredients

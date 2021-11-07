@@ -82,21 +82,19 @@ class Form extends React.Component {
       var carbs = this.state.carbs;
       var subset_recipes = all_data.filter(function (all_data) {
         return (
-          all_data.kcal >= kcal - 200 &&
-          all_data.kcal <= kcal + 200 &&
-          all_data.protein >= protein - 200 &&
-          all_data.protein <= protein + 200 &&
-          all_data.carbohydrates >= carbs - 200 &&
-          all_data.carbohydrates <= carbs + 200 &&
-          all_data.fat >= fat - 200 &&
-          all_data.fat <= fat + 200
+          all_data.kcal >= kcal - 100 &&
+          all_data.kcal <= kcal + 100 &&
+          all_data.protein >= protein - 20 &&
+          all_data.protein <= protein + 20 &&
+          all_data.carbohydrates >= carbs - 20 &&
+          all_data.carbohydrates <= carbs + 20 &&
+          all_data.fat >= fat - 20 &&
+          all_data.fat <= fat + 20
         );
       });
       subset_recipes = subset_recipes.sort(function (a, b) {
         return (
-          Math.abs(kcal - a.kcal) -
-          Math.abs(kcal - b.kcal) +
-          (Math.abs(protein - a.protein) - Math.abs(protein - b.protein)) +
+          (Math.abs(protein - a.protein) - Math.abs(protein - b.protein)) * 2 +
           (Math.abs(carbs - a.carbohydrates) -
             Math.abs(carbs - b.carbohydrate)) +
           (Math.abs(fat - a.fat) - Math.abs(fat - b.fat))
@@ -117,45 +115,48 @@ class Form extends React.Component {
               <CircularSlider
                 onChange={this.changeProtein}
                 label="Protein"
-                labelColor="#005a58"
-                knobColor="#005a58"
+                labelColor="#70db7e"
+                knobColor="#70db7e"
                 progressColorFrom="#00bfbd"
-                progressColorTo="#009c9a"
+                progressColorTo="#70db7e"
                 progressSize={24}
-                trackColor="#eeeeee"
+                trackColor="#333333"
                 trackSize={24}
                 name="protein-slider"
-                data={[...Array(100).keys()]}
+                data={[...Array(150).keys()]}
+                dataIndex={10}
               />{" "}
             </div>{" "}
             <div className="slider">
               <CircularSlider
                 onChange={this.changeCarbs}
                 label="Carbohydrates"
-                labelColor="#005a58"
-                knobColor="#005a58"
+                labelColor="#d66797"
+                knobColor="#d66797"
                 progressColorFrom="#00bfbd"
-                progressColorTo="#009c9a"
+                progressColorTo="#d66797"
                 progressSize={24}
-                trackColor="#eeeeee"
+                trackColor="#333333"
                 trackSize={24}
                 name="carb-slider"
-                data={[...Array(100).keys()]}
+                data={[...Array(150).keys()]}
+                dataIndex={10}
               />{" "}
             </div>{" "}
             <div className="slider">
               <CircularSlider
                 onChange={this.changeFat}
                 label="Fat"
-                labelColor="#005a58"
-                knobColor="#005a58"
+                labelColor="#e6dc6e"
+                knobColor="#e6dc6e"
                 progressColorFrom="#00bfbd"
-                progressColorTo="#009c9a"
+                progressColorTo="#e6dc6e"
                 progressSize={24}
-                trackColor="#eeeeee"
+                trackColor="#333333"
                 trackSize={24}
                 name="fat-slider"
-                data={[...Array(100).keys()]}
+                data={[...Array(150).keys()]}
+                dataIndex={10}
               />{" "}
             </div>{" "}
           </div>{" "}

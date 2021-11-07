@@ -15,15 +15,15 @@
     justify-content: center;
     align-items: baseline;
     letter-spacing: 5px;
-    color: #00bfbd;
+    color: #bebebe;
 }
 
 .generate-button {
-    background-color: #00bfbd;
+    background-color: #747474c9;
     height: 75px;
     width: 200px;
     border-radius: 20px;
-    color: #005a58;
+    color: #bebebe;
     border: 0px transparent;
     transition: 0.1s;
     font-size: 20px;
@@ -35,12 +35,12 @@
 
 .recipe-container {
     font-weight: lighter;
-    color: #005a58;
+    color: #bebebe;
     display: inline-block;
     width: calc(280 * 3px);
     margin: 10px;
-    background-color: transparent;
-    border: 1px solid #005a58;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid #333333;
     border-radius: 30px;
 }
 
@@ -57,7 +57,7 @@
 .kcal {
     background-color: transparent;
     border: 0;
-    color: #005a58;
+    color: #bebebe;
     font-size: 30px;
     padding: 10px;
     width: 100px;
@@ -74,7 +74,7 @@
 .previous {
     background-color: transparent;
     border: 0;
-    color: #005a58;
+    color: #bebebe;
     font-size: 20px;
     padding: 10px;
     width: 200px;
@@ -82,11 +82,11 @@
 
 .next:hover,
 .previous:hover {
-    color: #00bfbd;
+    color: #777373;
 }
 
 .arrow {
-    border: solid #005a58;
+    border: solid #bebebe;
     border-width: 0 3px 3px 0;
     display: inline-block;
     padding: 3px;
@@ -105,7 +105,7 @@
 
 .recipe-container .recipe-title {
     text-decoration: none;
-    color: #00bfbd;
+    color: #76b3b1;
     padding: 1em;
 }
 
@@ -119,10 +119,25 @@
     margin-top: 10px;
     font-weight: lighter;
     padding: 10px;
+    border-collapse: collapse;
+}
+
+.macro-table td {
+    text-align: center;
+    padding: 5px;
+    border-bottom: 1px solid rgb(121, 116, 116);
+}
+
+tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.041);
+}
+
+tr:hover {
+    background-color: rgb(122, 122, 122);
 }
 
 .macro-table th {
-    color: #00bfbd;
+    color: #76b3b1;
 }
 
 .ingredients-and-instructions-div {
