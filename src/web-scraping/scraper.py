@@ -24,14 +24,14 @@ def start_browser(URL):
     return browser
 
 
-def generate_sql_values(title, ingredients_table, nutrient_table, recipe_url, instructions):
+def generate_sql_values(title, ingredients_table, nutrient_table, db_url,  recipe_url, instructions):
     ingredients_table = [[td.text for td in row.find_all("td")] for row in ingredients_table.find_all('tr')]
     nutrient_table = [[td.text for td in row.find_all("td")] for row in nutrient_table.findAll("tr", class_="smallRows")]
     fat = nutrient_table[0][-1]
     carbohydrates = nutrient_table[1][-1]
     protein = nutrient_table[2][-1]
     energy = nutrient_table[3][-1]
-    sql_dict = {'title':title, 'url':recipe_url, 'ingredients':ingredients_table, 'fat':fat, 'protein':protein, 'carbohydrates':carbohydrates, 'kcal':energy, 'instructions': instructions}
+    sql_dict = {'title':title, 'db_url': db_url, 'url':recipe_url, 'ingredients':ingredients_table, 'fat':fat, 'protein':protein, 'carbohydrates':carbohydrates, 'kcal':energy, 'instructions': instructions}
 
     return sql_dict
 
@@ -128,7 +128,7 @@ def generate_recipe_database(URL):
     with open("./public/database/recipes.csv", "w", newline='', encoding='utf-8') as f:
         print('Creating csv...')
         wr = csv.writer(f)
-        wr.writerow(['title', 'url', 'ingredients', 'fat', 'protein',  'carbohydrates','kcal', 'instructions'])
+        wr.writerow(['title', 'db_url', 'url', 'ingredients', 'fat', 'protein',  'carbohydrates','kcal', 'instructions'])
 
     while has_next_page:
         html = main_browser.page_source
@@ -146,7 +146,7 @@ def generate_recipe_database(URL):
                     
                     if origin_url == None:
                         origin_url = recipe_url
-                    sql_values = generate_sql_values(title, ingredients_table, nutrient_table, origin_url, instructions)
+                    sql_values = generate_sql_values(title, ingredients_table, nutrient_table, recipe_url, origin_url, instructions)
 
                     with open("./public/database/recipes.csv", "a", newline='', encoding='utf-8') as f:
                         wr = csv.writer(f)

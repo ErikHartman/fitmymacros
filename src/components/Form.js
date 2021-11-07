@@ -3,6 +3,7 @@ import React from "react";
 import "./components.css";
 import Recipe from "./Recipes";
 import Papa from "papaparse";
+import e from "cors";
 
 async function getData() {
   const response = await fetch("database/recipes.csv");
@@ -23,6 +24,7 @@ class Form extends React.Component {
       fat: 0,
       carbs: 0,
       recipeIndex: 0,
+      wantedIngredients: [],
     };
 
     this.changeProtein = this.changeProtein.bind(this);
@@ -31,6 +33,8 @@ class Form extends React.Component {
     this.queryDatabase = this.queryDatabase.bind(this);
     this.next = this.next.bind(this);
     this.previous = this.previous.bind(this);
+    this.addIngredientToList = this.addIngredientToList.bind(this);
+    this.removeIngredientFromList = this.removeIngredientFromList.bind(this);
   }
   changeProtein(e) {
     var p = e;
@@ -72,16 +76,47 @@ class Form extends React.Component {
     this.setState({ recipeIndex: index });
   }
 
+  addIngredientToList(event) {
+    event.preventDefault();
+    if (this.ingredient.value.length > 1) {
+      var ingredientList = [...this.state.wantedIngredients];
+      ingredientList.push(this.ingredient.value);
+      this.setState({ wantedIngredients: ingredientList });
+      console.log(ingredientList);
+    }
+  }
+
+  removeIngredientFromList(index) {
+    let wantedIngredients = this.state.wantedIngredients;
+    wantedIngredients.splice(index, 1);
+    this.setState({
+      wantedIngredients: wantedIngredients,
+    });
+  }
+
   queryDatabase(event) {
     event.preventDefault();
+
     getData().then((data) => {
       let all_data = data.data;
+      console.log(all_data);
       var kcal = this.state.kcal;
       var protein = this.state.protein;
       var fat = this.state.fat;
       var carbs = this.state.carbs;
+      var wanted_ingredients = this.state.wantedIngredients;
       var subset_recipes = all_data.filter(function (all_data) {
+        var includes = true;
+        for (var i of wanted_ingredients) {
+          if (
+            all_data.ingredients !== undefined &&
+            !all_data.ingredients.includes(i)
+          ) {
+            includes = false;
+          }
+        }
         return (
+          includes &&
           all_data.kcal >= kcal - 100 &&
           all_data.kcal <= kcal + 100 &&
           all_data.protein >= protein - 20 &&
@@ -125,8 +160,8 @@ class Form extends React.Component {
                 name="protein-slider"
                 data={[...Array(150).keys()]}
                 dataIndex={10}
-              />{" "}
-            </div>{" "}
+              />
+            </div>
             <div className="slider">
               <CircularSlider
                 onChange={this.changeCarbs}
@@ -141,8 +176,8 @@ class Form extends React.Component {
                 name="carb-slider"
                 data={[...Array(150).keys()]}
                 dataIndex={10}
-              />{" "}
-            </div>{" "}
+              />
+            </div>
             <div className="slider">
               <CircularSlider
                 onChange={this.changeFat}
@@ -157,21 +192,53 @@ class Form extends React.Component {
                 name="fat-slider"
                 data={[...Array(150).keys()]}
                 dataIndex={10}
-              />{" "}
-            </div>{" "}
-          </div>{" "}
+              />
+            </div>
+          </div>
+          <div className="things-i-want">
+            <div>
+              <p>Things I want in my recipe:</p>
+            </div>
+            <div>
+              <input
+                className="ingredients-input"
+                type="text"
+                value={this.state.value}
+                ref={(ip) => {
+                  this.ingredient = ip;
+                }}
+              />
+              <button
+                className="add-ingredient"
+                onClick={this.addIngredientToList}
+              >
+                add
+              </button>
+            </div>
+            {this.state.wantedIngredients.map((item, index) => {
+              return (
+                <span
+                  className="ingredient"
+                  onClick={this.removeIngredientFromList.bind(undefined, index)}
+                  key={index}
+                >
+                  x {item}
+                </span>
+              );
+            })}
+          </div>
           <button className="generate-button" onClick={this.queryDatabase}>
-            Generate{" "}
-          </button>{" "}
+            Generate
+          </button>
         </form>
         <div className="next-previous-buttons">
           <button className="previous" onClick={this.previous}>
-            <i className="arrow left"> </i> Previous{" "}
-          </button>{" "}
+            <i className="arrow left"> </i> Previous
+          </button>
           <button className="next" onClick={this.next}>
-            Next <i className="arrow right"> </i>{" "}
-          </button>{" "}
-        </div>{" "}
+            Next <i className="arrow right"> </i>
+          </button>
+        </div>
         <Recipe recipe={this.state.recipes[this.state.recipeIndex]} />
       </>
     );
