@@ -189,3 +189,11 @@ tr:hover {
     padding: 5px;
     margin: 10px 5px 5px 5px;
 }
+
+.show-less-or-more {
+    background-color: orange;
+    color: white;
+    border-radius: 10%;
+    border: 0px solid transparent;
+    font: inherit;
+}

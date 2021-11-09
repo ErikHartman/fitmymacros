@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./components.css";
 
 function Recipe(props) {
+  const [isOpened, setIsOpened] = useState(false);
+  function toggle() {
+    setIsOpened((wasOpened) => !wasOpened);
+  }
+
   let recipe = props.recipe;
 
   if (recipe === undefined || recipe === null) {
@@ -12,8 +17,8 @@ function Recipe(props) {
       protein: 0,
       fat: 0,
       carbohydrates: 0,
-      ingredients: "Love, 1, tbsp, -,-,-,-,-",
-      instructions: "1. Make em \n 2. Eat em",
+      ingredients: "\n Love, 1, tbsp, -,-,-,-,-",
+      instructions: "\n 1. Make em \n 2. Eat em",
     };
   }
   let ingredients = recipe.ingredients.split("[").slice(3);
@@ -61,22 +66,35 @@ function Recipe(props) {
           <div className="ingredients-and-instructions-div">
             <table className="macro-table ingredients-table">
               <tbody>
+                <th>
+                  <button className="show-less-or-more" onClick={toggle}>
+                    +/-
+                  </button>
+                </th>
                 <tr>
                   <th>ingredient</th>
                   <th>qty </th>
-                  <th>kcal</th>
-                  <th>carbs</th>
-                  <th>protein</th>
-                  <th>fat</th>
+                  {isOpened && (
+                    <>
+                      <th>kcal</th>
+                      <th>carbs</th>
+                      <th>protein</th>
+                      <th>fat</th>
+                    </>
+                  )}
                 </tr>
                 {ingredients_for_table.map((item, i) => (
                   <tr key={i}>
                     <td>{item.what}</td>
                     <td>{item.qty}</td>
-                    <td>{item.kcal}</td>
-                    <td>{item.carbs}</td>
-                    <td>{item.protein}</td>
-                    <td>{item.fat}</td>
+                    {isOpened && (
+                      <>
+                        <td>{item.kcal}</td>
+                        <td>{item.carbs}</td>
+                        <td>{item.protein}</td>
+                        <td>{item.fat}</td>
+                      </>
+                    )}
                   </tr>
                 ))}
               </tbody>

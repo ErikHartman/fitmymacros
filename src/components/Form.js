@@ -59,7 +59,7 @@ class Form extends React.Component {
     });
   }
 
-  next(e) {
+  next() {
     let index = this.state.recipeIndex;
     if (index < this.state.recipes.length - 1) {
       index++;
@@ -67,7 +67,7 @@ class Form extends React.Component {
     this.setState({ recipeIndex: index });
   }
 
-  previous(e) {
+  previous() {
     let index = this.state.recipeIndex;
     if (index > 0) {
       index--;
