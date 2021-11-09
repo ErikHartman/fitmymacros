@@ -1,0 +1,186 @@
+@media (max-width: 500px) {
+    * {
+        box-sizing: border-box;
+    }
+    body,
+    .App {
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+        font-family: "Lato", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background-color: #333333;
+    }
+    .sliders {
+        display: inline-block;
+    }
+    .slider {
+        margin: 10px;
+    }
+    .title {
+        font-size: 30px;
+        font-weight: lighter;
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+        letter-spacing: 5px;
+        color: #bebebe;
+    }
+    .generate-button {
+        background-color: #747474c9;
+        height: 75px;
+        width: 200px;
+        border-radius: 20px;
+        color: #bebebe;
+        border: 0px transparent;
+        transition: 0.1s;
+        font-size: 20px;
+    }
+    .generate-button:hover {
+        transform: scale(1.1);
+    }
+    .recipe-container {
+        font-weight: lighter;
+        color: #bebebe;
+        display: inline-block;
+        width: calc(280 * 3px);
+        margin: 10px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid #333333;
+        border-radius: 30px;
+    }
+    .recipe-upper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .recipe-table {
+        color: white;
+    }
+    .kcal {
+        background-color: transparent;
+        border: 0;
+        color: #bebebe;
+        font-size: 30px;
+        padding: 10px;
+        width: 100px;
+    }
+    .next-previous-buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 500px;
+    }
+    .next,
+    .previous {
+        background-color: transparent;
+        border: 0;
+        color: #bebebe;
+        font-size: 20px;
+        padding: 10px;
+        width: 200px;
+    }
+    .next:hover,
+    .previous:hover {
+        color: #777373;
+    }
+    .arrow {
+        border: solid #bebebe;
+        border-width: 0 3px 3px 0;
+        display: inline-block;
+        padding: 3px;
+        margin-bottom: 3px;
+    }
+    .right {
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+    }
+    .left {
+        transform: rotate(135deg);
+        -webkit-transform: rotate(135deg);
+    }
+    .recipe-container .recipe-title {
+        text-decoration: none;
+        color: #76b3b1;
+        padding: 1em;
+    }
+    .macro-table {
+        font-size: 20px;
+        display: inline-block;
+    }
+    .macro-table th,
+    .macro-table {
+        margin-top: 10px;
+        font-weight: lighter;
+        padding: 10px;
+        border-collapse: collapse;
+    }
+    .macro-table td {
+        text-align: center;
+        padding: 5px;
+    }
+    tr:nth-child(even) {
+        background-color: rgba(0, 0, 0, 0.041);
+    }
+    tr:hover {
+        background-color: rgb(122, 122, 122);
+    }
+    .macro-table th {
+        color: #76b3b1;
+    }
+    .ingredients-and-instructions-div {
+        display: flex;
+    }
+    .ingredients-table {
+        width: 70%;
+        float: left;
+    }
+    .footer {
+        height: 2rem;
+    }
+    .github {
+        margin-bottom: 10px;
+        color: white;
+    }
+    .things-i-want {
+        display: block;
+        margin: 2%;
+        width: 100%;
+        color: grey;
+    }
+    .ingredients-input {
+        width: 50%;
+        padding: 10px;
+        background-color: rgba(5, 5, 5, 0.144);
+        border: 0px;
+        color: white;
+        font: inherit;
+    }
+    .add-ingredient {
+        color: white;
+        background-color: rgba(68, 196, 132, 0.795);
+        border-radius: 20px;
+        padding: 8px;
+        border: 0px;
+        font: inherit;
+        margin: 5px;
+    }
+    .ingredient {
+        background-color: rgb(189, 115, 121);
+        color: rgb(94, 9, 9);
+        border-radius: 10px;
+        padding: 5px;
+        margin: 10px 5px 5px 5px;
+        display: inline-block;
+    }
+    .show-less-or-more {
+        background-color: orange;
+        color: white;
+        border-radius: 10%;
+        border: 0px solid transparent;
+        font: inherit;
+    }
+}

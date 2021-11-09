@@ -14,11 +14,3 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
-
-.left-banner {
-    position: relative;
-    color: #fff;
-    top: 30%;
-    right: 30px;
-    width: 200px;
-}

@@ -1,6 +1,7 @@
 import CircularSlider from "@fseehawer/react-circular-slider";
 import React from "react";
 import "./components.css";
+import "./mobile.css";
 import Recipe from "./Recipes";
 import Papa from "papaparse";
 
