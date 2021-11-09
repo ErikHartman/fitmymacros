@@ -66,11 +66,13 @@ function Recipe(props) {
           <div className="ingredients-and-instructions-div">
             <table className="macro-table ingredients-table">
               <tbody>
-                <th>
-                  <button className="show-less-or-more" onClick={toggle}>
-                    +/-
-                  </button>
-                </th>
+                <tr>
+                  <th>
+                    <button className="show-less-or-more" onClick={toggle}>
+                      +/-
+                    </button>
+                  </th>
+                </tr>
                 <tr>
                   <th>ingredient</th>
                   <th>qty </th>

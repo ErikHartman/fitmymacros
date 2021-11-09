@@ -3,7 +3,6 @@ import React from "react";
 import "./components.css";
 import Recipe from "./Recipes";
 import Papa from "papaparse";
-import e from "cors";
 
 async function getData() {
   const response = await fetch("database/recipes.csv");
@@ -11,7 +10,7 @@ async function getData() {
   var results = Papa.parse(data, {
     header: true,
   });
-  return results;
+  return results.data;
 }
 
 class Form extends React.Component {
@@ -25,6 +24,7 @@ class Form extends React.Component {
       carbs: 0,
       recipeIndex: 0,
       wantedIngredients: [],
+      all_data: getData(),
     };
 
     this.changeProtein = this.changeProtein.bind(this);
@@ -80,7 +80,7 @@ class Form extends React.Component {
     event.preventDefault();
     if (this.ingredient.value.length > 1) {
       var ingredientList = [...this.state.wantedIngredients];
-      ingredientList.push(this.ingredient.value);
+      ingredientList.push(this.ingredient.value.toLowerCase());
       this.setState({ wantedIngredients: ingredientList });
       console.log(ingredientList);
     }
@@ -97,20 +97,18 @@ class Form extends React.Component {
   queryDatabase(event) {
     event.preventDefault();
 
-    getData().then((data) => {
-      let all_data = data.data;
-      console.log(all_data);
+    this.state.all_data.then((data) => {
       var kcal = this.state.kcal;
       var protein = this.state.protein;
       var fat = this.state.fat;
       var carbs = this.state.carbs;
       var wanted_ingredients = this.state.wantedIngredients;
-      var subset_recipes = all_data.filter(function (all_data) {
+      var subset_recipes = data.filter(function (all_data) {
         var includes = true;
         for (var i of wanted_ingredients) {
           if (
             all_data.ingredients !== undefined &&
-            !all_data.ingredients.includes(i)
+            !all_data.ingredients.toLowerCase().includes(i)
           ) {
             includes = false;
           }
