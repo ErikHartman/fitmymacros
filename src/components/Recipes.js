@@ -17,7 +17,7 @@ function Recipe(props) {
       protein: 0,
       fat: 0,
       carbohydrates: 0,
-      ingredients: "\n Love, 1, tbsp, -,-,-,-,-",
+      ingredients: "\n [[][Love, 1, tbsp, -,-,-,-,-]]",
       instructions: "\n 1. Make em \n 2. Eat em",
     };
   }

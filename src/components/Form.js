@@ -81,7 +81,9 @@ class Form extends React.Component {
     event.preventDefault();
     if (this.ingredient.value.length > 1) {
       var ingredientList = [...this.state.wantedIngredients];
-      ingredientList.push(this.ingredient.value.toLowerCase());
+      ingredientList.push(
+        this.ingredient.value.toLowerCase().replace(/[^a-zA-Z]+/g, "")
+      );
       this.setState({ wantedIngredients: ingredientList });
       console.log(ingredientList);
     }
@@ -109,7 +111,10 @@ class Form extends React.Component {
         for (var i of wanted_ingredients) {
           if (
             all_data.ingredients !== undefined &&
-            !all_data.ingredients.toLowerCase().includes(i)
+            !all_data.ingredients
+              .toLowerCase()
+              .replace(/[^a-zA-Z]+/g, "")
+              .includes(i)
           ) {
             includes = false;
           }
@@ -118,12 +123,12 @@ class Form extends React.Component {
           includes &&
           all_data.kcal >= kcal - 100 &&
           all_data.kcal <= kcal + 100 &&
-          all_data.protein >= protein - 20 &&
-          all_data.protein <= protein + 20 &&
-          all_data.carbohydrates >= carbs - 20 &&
-          all_data.carbohydrates <= carbs + 20 &&
-          all_data.fat >= fat - 20 &&
-          all_data.fat <= fat + 20
+          all_data.protein >= protein - 10 &&
+          all_data.protein <= protein + 10 &&
+          all_data.carbohydrates >= carbs - 10 &&
+          all_data.carbohydrates <= carbs + 10 &&
+          all_data.fat >= fat - 10 &&
+          all_data.fat <= fat + 10
         );
       });
       subset_recipes = subset_recipes.sort(function (a, b) {

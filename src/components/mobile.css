@@ -1,9 +1,10 @@
-@media (max-width: 500px) {
+@media (max-width: 800px) {
     * {
         box-sizing: border-box;
     }
     body,
     .App {
+        position: absolute;
         height: 100vh;
         width: 100vw;
         margin: 0;
@@ -46,16 +47,14 @@
         font-weight: lighter;
         color: #bebebe;
         display: inline-block;
-        width: calc(280 * 3px);
+        width: 80%;
         margin: 10px;
         background-color: rgba(255, 255, 255, 0.1);
         border: 1px solid #333333;
         border-radius: 30px;
     }
     .recipe-upper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: inline-block;
     }
     .recipe-table {
         color: white;
@@ -72,7 +71,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 500px;
+        width: 70%;
     }
     .next,
     .previous {
@@ -81,7 +80,7 @@
         color: #bebebe;
         font-size: 20px;
         padding: 10px;
-        width: 200px;
+        width: 15x;
     }
     .next:hover,
     .previous:hover {
@@ -114,13 +113,13 @@
     .macro-table th,
     .macro-table {
         margin-top: 10px;
+        padding: 2px;
         font-weight: lighter;
-        padding: 10px;
         border-collapse: collapse;
     }
     .macro-table td {
         text-align: center;
-        padding: 5px;
+        padding: 2px;
     }
     tr:nth-child(even) {
         background-color: rgba(0, 0, 0, 0.041);
@@ -132,11 +131,10 @@
         color: #76b3b1;
     }
     .ingredients-and-instructions-div {
-        display: flex;
+        display: inline-block;
     }
     .ingredients-table {
-        width: 70%;
-        float: left;
+        width: 100%;
     }
     .footer {
         height: 2rem;
