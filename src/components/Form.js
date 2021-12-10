@@ -154,8 +154,8 @@ class Form extends React.Component {
               <CircularSlider
                 onChange={this.changeProtein}
                 label="Protein"
-                labelColor="#70db7e"
-                knobColor="#70db7e"
+                labelColor="rgba(68, 196, 132, 0.795)"
+                knobColor="rgba(68, 196, 132, 0.795)"
                 progressColorFrom="#00bfbd"
                 progressColorTo="#70db7e"
                 progressSize={24}
@@ -170,10 +170,10 @@ class Form extends React.Component {
               <CircularSlider
                 onChange={this.changeCarbs}
                 label="Carbohydrates"
-                labelColor="#d66797"
-                knobColor="#d66797"
+                labelColor="rgba(68, 196, 132, 0.795)"
+                knobColor="rgba(68, 196, 132, 0.795)"
                 progressColorFrom="#00bfbd"
-                progressColorTo="#d66797"
+                progressColorTo="#70db7e"
                 progressSize={24}
                 trackColor="#333333"
                 trackSize={24}
@@ -186,10 +186,10 @@ class Form extends React.Component {
               <CircularSlider
                 onChange={this.changeFat}
                 label="Fat"
-                labelColor="#e6dc6e"
-                knobColor="#e6dc6e"
+                labelColor="rgba(68, 196, 132, 0.795)"
+                knobColor="rgba(68, 196, 132, 0.795)"
                 progressColorFrom="#00bfbd"
-                progressColorTo="#e6dc6e"
+                progressColorTo="#70db7e"
                 progressSize={24}
                 trackColor="#333333"
                 trackSize={24}

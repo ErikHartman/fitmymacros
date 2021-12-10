@@ -19,14 +19,14 @@
 }
 
 .generate-button {
-    background-color: #747474c9;
+    background-color: rgba(68, 196, 132, 0.795);
     height: 75px;
     width: 200px;
     border-radius: 20px;
-    color: #bebebe;
+    color: white;
     border: 0px transparent;
     transition: 0.1s;
-    font-size: 20px;
+    font: inherit;
 }
 
 .generate-button:hover {
@@ -193,7 +193,7 @@ tr:hover {
 }
 
 .show-less-or-more {
-    background-color: orange;
+    background-color: rgba(68, 196, 132, 0.795);
     color: white;
     border-radius: 10%;
     border: 0px solid transparent;
